@@ -5,7 +5,7 @@
 Clone do popular jogo [Wordle](https://www.powerlanguage.co.uk/wordle/) com algumas modificações extras:
 
 - :thinking: Escolha a dificuldade: palavras entre 5 e 7 letras
-- :star: Mais de uma palavra bônus por dia
+- :star: Até três palavras por dia
 
 
 ## :test_tube: Tecnologias utilizadas

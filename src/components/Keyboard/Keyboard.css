@@ -1,0 +1,13 @@
+.Keyboard {
+    display: flex;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-width: 100%;
+}
+
+.keyboard-row {
+    display: flex;
+    flex-direction: row;
+}
