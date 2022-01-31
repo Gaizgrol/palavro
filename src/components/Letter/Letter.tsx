@@ -1,3 +1,4 @@
+import { IoBackspaceOutline, IoCheckmark } from 'react-icons/io5';
 import './Letter.css';
 
 export enum LetterInfo {
@@ -29,11 +30,13 @@ export default function Letter( props: LetterProps ) {
                     ( exists === LetterInfo.RIGHT_PLACE ) ? 'right-place' : (
                     ( exists === LetterInfo.WRONG_PLACE ) ? 'wrong-place' : 'doesnt-exists' )
                 ) + ' submitted' : '' }
-                ${( letter === '+' ) ? 'key-enter' : (
-                   ( letter === '-' ) ? 'key-back': '')}
+                ${( letter === '+' || letter === '-' ) ? 'special-key' : '' }
             `}
         >
-            {!disabled && props.letter?.toUpperCase()}
+            {( letter === '-' ) ? <IoBackspaceOutline style={{marginTop: '2px'}}/> : (
+            ( letter === '+' ) ? <IoCheckmark style={{marginTop: '2px'}}/> :
+                !disabled && letter?.toUpperCase()
+            )}
         </div>
     );
 }

@@ -54,3 +54,7 @@
     border: 3px solid var(--letter-wrong-place);
     background-color: var(--letter-wrong-place);
 }
+
+.special-key {
+    width: 48px;
+}
