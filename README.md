@@ -45,11 +45,11 @@ Clone do popular jogo [Wordle](https://www.powerlanguage.co.uk/wordle/) com algu
 
 ### `npm run filter <nLetras> <arquivoSaida?>`
 
-Script utilizado para filtrar a base de dados e gerar os arquivos contendo arrays de palavras filtradas:
+Script utilizado para filtrar a base de dados do [*br.ispell-3.0* do Instituto de Matemática e Estatística da USP](https://www.ime.usp.br/~ueda/br.ispell/) e gerar os seguintes arquivos JavaScript contendo arrays de palavras filtradas:
 
-- `5letras.js`,
-- `6letras.js` e
-- `7letras.js`.
+- `5letras.js`
+- `6letras.js`
+- `7letras.js`
 
 Parâmetros:
 
