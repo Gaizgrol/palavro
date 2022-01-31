@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/palavro/static/css/main.c692f0e8.css",
+    "main.js": "/palavro/static/js/main.ee917a8a.js",
+    "index.html": "/palavro/index.html",
+    "main.c692f0e8.css.map": "/palavro/static/css/main.c692f0e8.css.map",
+    "main.ee917a8a.js.map": "/palavro/static/js/main.ee917a8a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c692f0e8.css",
+    "static/js/main.ee917a8a.js"
+  ]
+}
