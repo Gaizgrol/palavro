@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/palavro/static/css/main.c692f0e8.css",
-    "main.js": "/palavro/static/js/main.ee917a8a.js",
+    "main.css": "/palavro/static/css/main.d113284e.css",
+    "main.js": "/palavro/static/js/main.04b1db79.js",
     "index.html": "/palavro/index.html",
-    "main.c692f0e8.css.map": "/palavro/static/css/main.c692f0e8.css.map",
-    "main.ee917a8a.js.map": "/palavro/static/js/main.ee917a8a.js.map"
+    "main.d113284e.css.map": "/palavro/static/css/main.d113284e.css.map",
+    "main.04b1db79.js.map": "/palavro/static/js/main.04b1db79.js.map"
   },
   "entrypoints": [
-    "static/css/main.c692f0e8.css",
-    "static/js/main.ee917a8a.js"
+    "static/css/main.d113284e.css",
+    "static/js/main.04b1db79.js"
   ]
 }
