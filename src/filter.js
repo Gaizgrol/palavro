@@ -49,7 +49,7 @@ const filterBy = async ( nLetters, searchFileName ) => {
 
     palavras = `const palavras${nLetras}Letras = [${palavras.reduce( (acc, palavra, i) => {
         return `${acc}'${palavra}'${ i===palavras.length-1 ? '' : ',' }`
-    }, '')}]; module.exports = palavra${nLetras}Letras;`;
+    }, '')}]; module.exports = palavras${nLetras}Letras;`;
 
     // console.log( palavras );
 
