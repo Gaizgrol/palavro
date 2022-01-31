@@ -8,15 +8,23 @@ import {
     IoGrid
 } from 'react-icons/io5'
 import { useState } from 'react';
+import GameModes from '../GameModes/GameModes';
 
-export default function Header() {
+export interface HeaderProps {
+    gameMode: number;
+    onGameModeChange: ( gm: number ) => any;
+}
+
+export default function Header( props: HeaderProps ) {
 
     const [showGameModes, setShowGameModes] = useState(false);
     const [showHelp, setShowHelp] = useState(false);
 
+    const { gameMode, onGameModeChange } = props;
+
     return (<>
         {
-            // Ajuda
+        // Ajuda
         }
         <Modal
             isOpen={showHelp}
@@ -25,13 +33,16 @@ export default function Header() {
             Ajuda!
         </Modal>
         {
-            // Modos de jogo
+        // Modos de jogo
         }
         <Modal
             isOpen={showGameModes}
             onRequestClose={() => setShowGameModes(false)}
         >
-            Game Modes!
+            <GameModes
+                selected={gameMode}
+                onGameModeChange={onGameModeChange}
+            />
         </Modal>
         <header className="Header">
             <div className='edges'>

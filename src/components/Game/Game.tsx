@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import seed from 'seedrandom';
 import Keyboard, { KeyboardInfo } from "../Keyboard/Keyboard";
 import { LetterInfo } from "../Letter/Letter";
@@ -8,7 +8,9 @@ import pal5 from '../../providers/5letras';
 import pal6 from '../../providers/6letras';
 import pal7 from '../../providers/7letras';
 
-export const letters: { [key: number]: string[] } = {
+import { NumberDict } from "../..";
+
+export const letters: NumberDict<string[]> = {
     5: pal5 as any,
     6: pal6 as any,
     7: pal7 as any
@@ -32,72 +34,110 @@ const fetchWord = ( size: number ) => {
     return words[ Math.round( generate.double() * (words.length-1) ) ];
 };
 
-const dayWords = {
+const dayWords: NumberDict<string[]> = {
     5: [ fetchWord(5), fetchWord(5), fetchWord(5) ],
     6: [ fetchWord(6), fetchWord(6), fetchWord(6) ],
     7: [ fetchWord(7), fetchWord(7), fetchWord(7) ]
 };
 
-export default function Game() {
+function createGameModeObj<T>( value: T ): NumberDict<T> {
+    return {
+        5: value,
+        6: value,
+        7: value
+    }
+};
+
+export interface GameProps {
+    gameMode: number;
+}
+
+export default function Game( props: GameProps ) {
     
-    const word = dayWords[5][0];
+    const { gameMode } = props;
+    const run = 0;
     
     // 5 letras - 6 tentativas
     // 6 letras - 5 tentativas
     // 7 letras - 4 tentativas
-    const maxTries = 11 - word.length;
-    
+    const maxTries: NumberDict<number> = {
+        5: 6,
+        6: 5,
+        7: 4
+    };
+
     // Palavra selecionada
-    const [actualTry, setActualTry] = useState( 0 );
+    const [actualTry, setActualTry] = useState( createGameModeObj(0) );
+    
     // Texto da palavra selecionada
-    const [text, setText] = useState( '' );
+    const [text, setText] = useState( createGameModeObj('') );
+    
     // Fim de jogo?
-    const [gameEnd, setGameEnd] = useState( false );
+    const [gameEnd, setGameEnd] = useState( createGameModeObj(false) );
+    
     // Palavras das tentativas anteriores
-    const [tries, setTries] = useState( [] as string[] );
+    const [tries, setTries] = useState({
+        5: [],
+        6: [],
+        7: []
+    } as NumberDict<string[]>);
+    
     // Informações das letras usadas nas tentativas
-    const [letterInfo, setLetterInfo] = useState( {} as KeyboardInfo );
+    const [letterInfo, setLetterInfo] = useState({
+        5: {},
+        6: {},
+        7: {}
+    } as NumberDict<KeyboardInfo> );
 
     // Deletar uma letra
     const backspace = () => {
-        if ( !text.length )
+        if ( !text[gameMode].length )
             return;
-        setText( text.substring( 0, text.length - 1 ) );
+        
+        text[gameMode] = text[gameMode].substring( 0, text[gameMode].length - 1 )
+        setText( {...text} );
     }
 
     // Tentar submeter uma palavra
     const enter = () => {
+        const submission = text[gameMode];
+
         // Não finalizou a palavra
-        if ( text.length !== word.length )
+        if ( submission.length !== dayWords[gameMode][run].length )
             return;
-        
+
         // Finalizou a palavra e vai pular para a próxima tentativa
-        const nextTry = actualTry+1;
-        setActualTry( nextTry );
-        setTries( [...tries, text] );
-        setText( '' );
+        actualTry[gameMode]++;
+        setActualTry( {...actualTry} );
+        
+        tries[gameMode].push( submission );
+        setTries( {...tries} );
+        
+        text[gameMode] = '';
+        setText( {...text} );
 
         // Palavra correta
-        if ( text === word )
+        if ( submission === dayWords[gameMode][run] )
             return finish( true );
         // Esgotou a quantidade de tentativas
-        if ( nextTry >= maxTries )
+        if ( actualTry[gameMode] >= maxTries[gameMode] )
             return finish( false );
     }
 
     // Lógica de fim de jogo
     const finish = ( win: boolean ) => {
-        setGameEnd( true );
+        gameEnd[gameMode] = true;
+        setGameEnd({ ...gameEnd });
         if ( win )
-            alert( `Parabéns! Você conseguiu na tentativa ${actualTry+1}/${maxTries}` );
+            alert( `Parabéns! Você conseguiu na tentativa ${actualTry[gameMode]}/${maxTries[gameMode]}` );
         else
-            alert( `Não foi dessa vez!\nA palavra era ${word.toUpperCase()}` );
+            alert( `Não foi dessa vez!\nA palavra era ${dayWords[gameMode][run].toUpperCase()}` );
     }
 
     // Clique em uma determinada tecla
     const letterClick = ( key: string ) => {
         // Já terminou o jogo: ignora
-        if ( gameEnd )
+        if ( gameEnd[gameMode] )
             return;
 
         if ( key === 'Backspace' )
@@ -108,9 +148,12 @@ export default function Game() {
         // caso ainda tenha espaço
         else if (
             char(key) >= char('a') && char(key) <= char('z') &&
-            key.length === 1 && text.length < word.length
-        )
-            setText( text + key[0] );
+            key.length === 1 && text[gameMode].length < dayWords[gameMode][run].length
+        ){
+            text[gameMode] += key[0];
+            setText( {...text} );
+        }
+
     }
 
     // Troca de tentativa = Submeteu resposta
@@ -120,9 +163,9 @@ export default function Game() {
         
         // Pega o status mais importante de cada
         // letra digitada anteriormente
-        tries.forEach( attempt => {
+        tries[gameMode].forEach( attempt => {
             // Informações de status da letra
-            wordStatus( word, attempt ).forEach( (st, pos) => {
+            wordStatus( dayWords[gameMode][run], attempt ).forEach( (st, pos) => {
                 const letter = attempt[pos];
                 info[letter] ??= LetterInfo.DOESNT_EXIST;
                 // Caso o estado seja "mais importante", atualize.
@@ -130,28 +173,29 @@ export default function Game() {
             });
         });
 
-        setLetterInfo( info );
+        letterInfo[gameMode] = info;
+        setLetterInfo( {...letterInfo} );
     }, [tries]);
 
     // Configura entrada de texto
     document.onkeydown = ( ev ) => letterClick( ev.key );
 
     return (<>
-        {Array(maxTries).fill(' ').map( (_, i) =>
+        {Array(maxTries[gameMode]).fill(' ').map( (_, i) =>
             <Word
                 key={`word-${i}`}
-                correct={word}
-                position={text.length}
+                correct={dayWords[gameMode][run]}
+                position={text[gameMode].length}
                 state={
-                    ( actualTry > i ) ? WordInfo.SUBMITTED : (
-                    ( actualTry < i || gameEnd ) ? WordInfo.NOT_REACHED :
+                    ( actualTry[gameMode] > i ) ? WordInfo.SUBMITTED : (
+                    ( actualTry[gameMode] < i || gameEnd[gameMode] ) ? WordInfo.NOT_REACHED :
                         WordInfo.SELECTED )
                 }
-                text={actualTry === i ? text : tries[i] ?? ''}
+                text={actualTry[gameMode] === i ? text[gameMode] : tries[gameMode][i] ?? ''}
             />
         )}
         <Keyboard
-            letterInfo={letterInfo}
+            letterInfo={letterInfo[gameMode]}
             onLetterClick={letterClick}
         />
     </>);

@@ -6,6 +6,10 @@ import App from './App';
 
 const root = document.getElementById('root');
 
+export interface NumberDict<T> {
+  [key: number]: T
+}
+
 Modal.setAppElement( root! );
 
 ReactDOM.render(
