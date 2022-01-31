@@ -1,3 +1,4 @@
+import Modal from 'react-modal';
 import './Header.css';
 
 import {
@@ -6,9 +7,32 @@ import {
     IoHelpCircleOutline,
     IoGrid
 } from 'react-icons/io5'
+import { useState } from 'react';
 
 export default function Header() {
-    return (
+
+    const [showGameModes, setShowGameModes] = useState(false);
+    const [showHelp, setShowHelp] = useState(false);
+
+    return (<>
+        {
+            // Ajuda
+        }
+        <Modal
+            isOpen={showHelp}
+            onRequestClose={() => setShowHelp(false)}
+        >
+            Ajuda!
+        </Modal>
+        {
+            // Modos de jogo
+        }
+        <Modal
+            isOpen={showGameModes}
+            onRequestClose={() => setShowGameModes(false)}
+        >
+            Game Modes!
+        </Modal>
         <header className="Header">
             <div className='edges'>
                 <IoLogoGithub
@@ -24,7 +48,7 @@ export default function Header() {
                     title='Ajuda'
                     
                     onClick={() => {
-                        console.log( 'Ajuda' );
+                        setShowHelp(true);
                     }}
                 />
             </div>
@@ -45,10 +69,10 @@ export default function Header() {
                     title='Opções'
                     
                     onClick={() => {
-                        console.log( 'Opções' );
+                        setShowGameModes(true);
                     }}
                 />
             </div>
         </header>
-    )
+    </>);
 }
