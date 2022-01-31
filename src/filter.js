@@ -7,6 +7,8 @@ const { open } = require( 'fs/promises' );
 const filterBy = async ( nLetters, searchFileName ) => {
     const file = await open( searchFileName, 'r' );
     const data = await file.readFile({ encoding: 'utf-8' });
+    await file.close();
+    
     return data.split('\n');
 };
 
@@ -56,6 +58,7 @@ const filterBy = async ( nLetters, searchFileName ) => {
     // Escrita em arquivo
     const file = await open( saida, 'w' );
     await file.write( palavras );
+    await file.close();
 
     console.log( 'Finalizado!' );
 })();
