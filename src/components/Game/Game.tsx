@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Keyboard, { KeyboardInfo } from "../Keyboard/Keyboard";
 import { LetterInfo } from "../Letter/Letter";
-import Word, { letterCount, WordInfo, wordStatus } from "../Word/Word";
+import Word, { WordInfo, wordStatus } from "../Word/Word";
 
 const char = ( str: string ) => str.toLowerCase().charCodeAt(0);
 

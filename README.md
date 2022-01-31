@@ -41,7 +41,20 @@ Clone do popular jogo [Wordle](https://www.powerlanguage.co.uk/wordle/) com algu
 </a>
 
 
-## :arrow_forward: Executando o projeto
+## :arrow_forward: Scripts do projeto
+
+### `npm run filter <nLetras> <arquivoSaida?>`
+
+Script utilizado para filtrar a base de dados e gerar os arquivos contendo arrays de palavras filtradas:
+
+- `5letras.js`,
+- `6letras.js` e
+- `7letras.js`.
+
+Parâmetros:
+
+- `<nLetras>`: Número de letras das palavras alvo
+- `<arquivoSaida?>` Arquivo de saída, parâmetro opcional. Por padrão, seu valor é *./public/palavras/\<nLetras\>letras.js*
 
 ### `npm start`
 
@@ -54,7 +67,6 @@ Roda os testes da aplicação em modo interativo.
 ### `npm run build`
 
 Constrói a aplicação e coloca na pasta `build`.
-
 
 ## :busts_in_silhouette: Redes sociais
 
