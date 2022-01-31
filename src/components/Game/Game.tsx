@@ -1,16 +1,46 @@
 import { useEffect, useState } from "react";
+import seed from 'seedrandom';
 import Keyboard, { KeyboardInfo } from "../Keyboard/Keyboard";
 import { LetterInfo } from "../Letter/Letter";
 import Word, { WordInfo, wordStatus } from "../Word/Word";
 
+import pal5 from '../../providers/5letras';
+import pal6 from '../../providers/6letras';
+import pal7 from '../../providers/7letras';
+
+export const letters: { [key: number]: string[] } = {
+    5: pal5 as any,
+    6: pal6 as any,
+    7: pal7 as any
+};
+
+// O gerador pseudo-aleatório terá os mesmos resultados em um determinado
+// dia, porém quando o dia mudar ele também mudará
+const now = new Date();
+const generate = seed(`Palavro! ${
+    (now.getFullYear()+'').padStart(4, '0')
+}-${
+    (now.getMonth()+1+'').padStart(2, '0')
+}-${
+    (now.getDate()+'').padStart(2, '0')
+}`);
+
 const char = ( str: string ) => str.toLowerCase().charCodeAt(0);
 
-// #TODO
-const fetchWord = () => 'salada';
+const fetchWord = ( size: number ) => {
+    const words = letters[ size ] ?? ['x'.repeat(size)];
+    return words[ Math.round( generate.double() * (words.length-1) ) ];
+};
+
+const dayWords = {
+    5: [ fetchWord(5), fetchWord(5), fetchWord(5) ],
+    6: [ fetchWord(6), fetchWord(6), fetchWord(6) ],
+    7: [ fetchWord(7), fetchWord(7), fetchWord(7) ]
+};
 
 export default function Game() {
     
-    const word = fetchWord();
+    const word = dayWords[5][0];
     
     // 5 letras - 6 tentativas
     // 6 letras - 5 tentativas
@@ -59,9 +89,9 @@ export default function Game() {
     const finish = ( win: boolean ) => {
         setGameEnd( true );
         if ( win )
-            alert( 'Parabéns!' );
+            alert( `Parabéns! Você conseguiu na tentativa ${actualTry+1}/${maxTries}` );
         else
-            alert( 'Não foi dessa vez!' );
+            alert( `Não foi dessa vez!\nA palavra era ${word.toUpperCase()}` );
     }
 
     // Clique em uma determinada tecla
