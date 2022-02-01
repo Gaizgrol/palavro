@@ -26,24 +26,36 @@ const filterBy = async ( nLetters, searchFileName ) => {
     
     // Busca as palavras
     let palavras = await filterBy( nLetras, entrada );
+
+    let nPalavras = palavras.length;
+
+    console.log( `Palavras na base de dados: ${nPalavras}` );
+
+    // console.log( palavras.filter( palavra => palavra !== palavra.toLowerCase() ) );
     
-    console.log( `Removendo palavras contendo (.), (,), (-), ( ) e (')...\nRemovendo palavras somente maiúsculas...\nColocando todas em letras minúsculas...` );
+    console.log( `Removendo palavras que não possuem 5 letras\nRemovendo palavras contendo (.), (,), (-), ( ) e (')...\nRemovendo palavras com letras maiúsculas...Colocando todas em letras minúsculas...` );
     
     // Filtra as palavras e coloca todo mundo para lowercasea
     palavras = palavras.filter(
         word => (
             word.length === nLetras && // Tamanho que pedi
             [...word].every( char => ![...'\' .,-'].includes(char) ) && // Sem símbolo por favor
-            word !== word.toUpperCase() // Morram, números romanos e siglas
+            word === word.toLowerCase() // Sem nomes próprios, números romanos e siglas
         )
     ).map(
         word => word.toLowerCase()
     );
 
+    console.log( `Palavras descartadas: ${nPalavras - palavras.length}. Palavras restantes: ${palavras.length}` );
+
+    nPalavras = palavras.length;
+
     console.log( `Removendo duplicatas...` );
 
     // Array -> Coleção -> Array para remover entradas duplicadas
     palavras = [...( new Set( palavras ) )];
+
+    console.log( `Palavras descartadas: ${nPalavras - palavras.length}. Palavras restantes: ${palavras.length}` );
 
     console.log( `Gerando string...` );
 
