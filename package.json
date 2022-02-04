@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://gaizgrol.github.io/palavro",
   "dependencies": {
+    "@frogcat/ttl2jsonld": "^0.0.6",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -26,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "filter": "node src/filter.js ./public/palavras/originais.txt",
+    "prefilter": "node src/data-tools/generateWordData.js",
+    "filter": "node src/data-tools/filterWords.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
