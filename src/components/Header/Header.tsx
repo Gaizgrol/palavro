@@ -27,6 +27,7 @@ export default function Header( props: HeaderProps ) {
         // Ajuda
         }
         <Modal
+            style={{ content: { padding: 0, inset: '20px' } }}
             isOpen={showHelp}
             onRequestClose={() => setShowHelp(false)}
         >
@@ -36,6 +37,7 @@ export default function Header( props: HeaderProps ) {
         // Modos de jogo
         }
         <Modal
+            style={{ content: { padding: 0, inset: '20px' } }}
             isOpen={showGameModes}
             onRequestClose={() => setShowGameModes(false)}
         >

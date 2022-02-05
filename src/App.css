@@ -3,5 +3,5 @@
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	min-height: calc( 100vh - 32px );
+	height: calc( 100vh - 48px );
 }

@@ -39,7 +39,7 @@ const fetchWord = ( size: number ) => {
 };
 
 const dayWords: NumberDict<string[]> = {
-    5: [ fetchWord(5), fetchWord(5), fetchWord(5) ],
+    5: [ 'ppppp', fetchWord(5), fetchWord(5) ],
     6: [ fetchWord(6), fetchWord(6), fetchWord(6) ],
     7: [ fetchWord(7), fetchWord(7), fetchWord(7) ]
 };
@@ -64,12 +64,7 @@ export default function Game( props: GameProps ) {
     // 5 letras - 6 tentativas
     // 6 letras - 5 tentativas
     // 7 letras - 4 tentativas
-    const maxTries: NumberDict<number> = {
-        5: 6,
-        // Modos mais difíceis
-        6: 5,
-        7: 5
-    };
+    const maxTries = 6;
 
     // Palavra selecionada
     const [actualTry, setActualTry] = useState( createGameModeObj(0) );
@@ -125,7 +120,7 @@ export default function Game( props: GameProps ) {
         if ( [...submission].every( (letter, pos) => similar( letter, dayWords[gameMode][run][pos] ) ) )
             return finish( true );
         // Esgotou a quantidade de tentativas
-        if ( actualTry[gameMode] >= maxTries[gameMode] )
+        if ( actualTry[gameMode] >= maxTries )
             return finish( false );
     }
 
@@ -134,7 +129,7 @@ export default function Game( props: GameProps ) {
         gameEnd[gameMode] = true;
         setGameEnd({ ...gameEnd });
         if ( win )
-            alert( `Parabéns! Você conseguiu na tentativa ${actualTry[gameMode]}/${maxTries[gameMode]}` );
+            alert( `Parabéns! Você conseguiu na tentativa ${actualTry[gameMode]}/${maxTries}` );
         else
             alert( `Não foi dessa vez!\nA palavra era ${dayWords[gameMode][run].toUpperCase()}` );
     }
@@ -191,7 +186,7 @@ export default function Game( props: GameProps ) {
 
     return (<>
         <div className="words">
-            {Array(maxTries[gameMode]).fill(' ').map( (_, i) =>
+            {Array(maxTries).fill(' ').map( (_, i) =>
                 <Word
                     key={`word-${i}`}
                     correct={dayWords[gameMode][run]}

@@ -22,3 +22,7 @@
     flex-direction: row;
     justify-content: flex-end;
 }
+
+.modal-footer {
+    padding: 0;
+}
