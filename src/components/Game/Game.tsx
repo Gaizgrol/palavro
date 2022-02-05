@@ -39,7 +39,7 @@ const fetchWord = ( size: number ) => {
 };
 
 const dayWords: NumberDict<string[]> = {
-    5: [ 'ppppp', fetchWord(5), fetchWord(5) ],
+    5: [ fetchWord(5), fetchWord(5), fetchWord(5) ],
     6: [ fetchWord(6), fetchWord(6), fetchWord(6) ],
     7: [ fetchWord(7), fetchWord(7), fetchWord(7) ]
 };
