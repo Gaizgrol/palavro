@@ -16,8 +16,8 @@ export default function Keyboard( props: KeyboardProps ) {
 
     const rows = [
         'qwertyuiop',
-        'asdfghjkl',
-        '-zxcvbnm+'
+        'asdfghjkl-',
+        'zxcvbnm+'
     ];
 
     return (

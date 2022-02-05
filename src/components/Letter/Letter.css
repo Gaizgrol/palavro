@@ -3,9 +3,9 @@
 }
 
 .game {
-    border: 3px solid var(--outline-letter);
+    border: 2px solid var(--outline-letter);
     border-radius: 10%;
-    margin: 3px;
+    margin: 1px;
     padding-bottom: 4px;
     width: 38px;
     text-align: center;
@@ -16,14 +16,15 @@
 
 .keyboard {
     box-sizing: border-box;
-    border: 2px solid var(--outline-letter);
+    border: 1px solid var(--outline-letter);
     border-radius: 10%;
     margin: 2px;
     padding: 2px;
-    width: 32px;
+    width: min( 48px, calc(10vw - 4px) );
     height: 36px;
     text-align: center;
     font-size: 1.5em;
+    font-weight: 300;
     cursor: pointer;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .disabled {
-    border: 3px solid lightgrey;
+    border: 2px solid lightgrey;
 }
 
 .submitted {
@@ -41,20 +42,20 @@
 }
 
 .doesnt-exists {
-    border: 3px solid var(--letter-doesnt-exists);
+    border-color: var(--letter-doesnt-exists);
     background-color: var(--letter-doesnt-exists);
 }
 
 .right-place {
-    border: 3px solid var(--letter-right-place);
+    border-color: var(--letter-right-place);
     background-color: var(--letter-right-place);
 }
 
 .wrong-place {
-    border: 3px solid var(--letter-wrong-place);
+    border-color: var(--letter-wrong-place);
     background-color: var(--letter-wrong-place);
 }
 
-.special-key {
+.enter {
     width: 48px;
 }

@@ -45,18 +45,9 @@ Clone do popular jogo [Wordle](https://www.powerlanguage.co.uk/wordle/) com algu
 
 ## :arrow_forward: Scripts do projeto
 
-### `npm run filter <nLetras> <arquivoSaida?>`
+### `npm run filter`
 
-Script utilizado para filtrar a base de dados do [*br.ispell-3.0* do Instituto de Matemática e Estatística da USP](https://www.ime.usp.br/~ueda/br.ispell/) e gerar os seguintes arquivos JavaScript contendo arrays de palavras filtradas:
-
-- `5letras.js`
-- `6letras.js`
-- `7letras.js`
-
-Parâmetros:
-
-- `<nLetras>`: Número de letras das palavras alvo
-- `<arquivoSaida?>` Arquivo de saída, parâmetro opcional. Por padrão, seu valor é *./public/palavras/\<nLetras\>letras.js*
+Script utilizado para filtrar a base de dados do [OpenWordnet-PT](https://github.com/own-pt/openWordnet-PT) e gerar o arquivo `palavras.js` contendo palavras e suas descrições.
 
 ### `npm start`
 

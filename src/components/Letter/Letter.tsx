@@ -30,7 +30,7 @@ export default function Letter( props: LetterProps ) {
                     ( exists === LetterInfo.RIGHT_PLACE ) ? 'right-place' : (
                     ( exists === LetterInfo.WRONG_PLACE ) ? 'wrong-place' : 'doesnt-exists' )
                 ) + ' submitted' : '' }
-                ${( letter === '+' || letter === '-' ) ? 'special-key' : '' }
+                ${( letter === '+' ) ? 'enter' : '' }
             `}
         >
             {( letter === '-' ) ? <IoBackspaceOutline style={{marginTop: '2px'}}/> : (
