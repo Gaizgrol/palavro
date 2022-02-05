@@ -47,7 +47,7 @@ export default function Header( props: HeaderProps ) {
         <header className="Header">
             <div className='edges'>
                 <IoLogoGithub
-                    size='1.75em'
+                    size='1.6em'
                     title='Código fonte'
 
                     onClick={() => {
@@ -55,7 +55,7 @@ export default function Header( props: HeaderProps ) {
                     }}
                 />
                 <IoHelpCircleOutline
-                    size='1.75em'
+                    size='1.6em'
                     title='Ajuda'
                     
                     onClick={() => {
@@ -68,7 +68,7 @@ export default function Header( props: HeaderProps ) {
             </h1>
             <div className='row edges'>
                 <IoBulbOutline
-                    size='1.75em'
+                    size='1.6em'
                     title='Mudar tema'
 
                     onClick={() => {
@@ -76,7 +76,7 @@ export default function Header( props: HeaderProps ) {
                     }}
                 />
                 <IoGrid
-                    size='1.75em'
+                    size='1.6em'
                     title='Opções'
                     
                     onClick={() => {

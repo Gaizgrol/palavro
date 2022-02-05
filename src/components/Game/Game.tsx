@@ -1,19 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import './Game.css';
+import { useEffect, useState } from "react";
 import seed from 'seedrandom';
 import Keyboard, { KeyboardInfo } from "../Keyboard/Keyboard";
 import { LetterInfo } from "../Letter/Letter";
-import Word, { WordInfo, wordStatus } from "../Word/Word";
-
-import pal5 from '../../providers/5letras';
-import pal6 from '../../providers/6letras';
-import pal7 from '../../providers/7letras';
-
+import Word, { similar, WordInfo, wordStatus } from "../Word/Word";
 import { NumberDict } from "../..";
 
-export const letters: NumberDict<string[]> = {
-    5: pal5 as any,
-    6: pal6 as any,
-    7: pal7 as any
+import pal from '../../providers/palavras';
+
+const {
+    '5': pal5,
+    '6': pal6,
+    '7': pal7
+} = pal;
+
+export const letterFilteredWords: NumberDict<string[]> = {
+    5: Object.keys(pal5),
+    6: Object.keys(pal6),
+    7: Object.keys(pal7)
 };
 
 // O gerador pseudo-aleatório terá os mesmos resultados em um determinado
@@ -30,7 +34,7 @@ const generate = seed(`Palavro! ${
 const char = ( str: string ) => str.toLowerCase().charCodeAt(0);
 
 const fetchWord = ( size: number ) => {
-    const words = letters[ size ] ?? ['x'.repeat(size)];
+    const words = letterFilteredWords[ size ] ?? ['x'.repeat(size)];
     return words[ Math.round( generate.double() * (words.length-1) ) ];
 };
 
@@ -62,8 +66,9 @@ export default function Game( props: GameProps ) {
     // 7 letras - 4 tentativas
     const maxTries: NumberDict<number> = {
         5: 6,
+        // Modos mais difíceis
         6: 5,
-        7: 4
+        7: 5
     };
 
     // Palavra selecionada
@@ -117,7 +122,7 @@ export default function Game( props: GameProps ) {
         setText( {...text} );
 
         // Palavra correta
-        if ( submission === dayWords[gameMode][run] )
+        if ( [...submission].every( (letter, pos) => similar( letter, dayWords[gameMode][run][pos] ) ) )
             return finish( true );
         // Esgotou a quantidade de tentativas
         if ( actualTry[gameMode] >= maxTries[gameMode] )
@@ -178,22 +183,28 @@ export default function Game( props: GameProps ) {
     }, [tries]);
 
     // Configura entrada de texto
-    document.onkeydown = ( ev ) => letterClick( ev.key );
+    document.onkeydown = ( ev ) => {
+        if ( ev.key === 'Backspace' )
+            ev.preventDefault();
+        letterClick( ev.key );
+    }
 
     return (<>
-        {Array(maxTries[gameMode]).fill(' ').map( (_, i) =>
-            <Word
-                key={`word-${i}`}
-                correct={dayWords[gameMode][run]}
-                position={text[gameMode].length}
-                state={
-                    ( actualTry[gameMode] > i ) ? WordInfo.SUBMITTED : (
-                    ( actualTry[gameMode] < i || gameEnd[gameMode] ) ? WordInfo.NOT_REACHED :
-                        WordInfo.SELECTED )
-                }
-                text={actualTry[gameMode] === i ? text[gameMode] : tries[gameMode][i] ?? ''}
-            />
-        )}
+        <div className="words">
+            {Array(maxTries[gameMode]).fill(' ').map( (_, i) =>
+                <Word
+                    key={`word-${i}`}
+                    correct={dayWords[gameMode][run]}
+                    position={text[gameMode].length}
+                    state={
+                        ( actualTry[gameMode] > i ) ? WordInfo.SUBMITTED : (
+                        ( actualTry[gameMode] < i || gameEnd[gameMode] ) ? WordInfo.NOT_REACHED :
+                            WordInfo.SELECTED )
+                    }
+                    text={actualTry[gameMode] === i ? text[gameMode] : tries[gameMode][i] ?? ''}
+                />
+            )}
+        </div>
         <Keyboard
             letterInfo={letterInfo[gameMode]}
             onLetterClick={letterClick}

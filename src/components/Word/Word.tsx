@@ -14,6 +14,25 @@ export interface WordProps {
     text: string;
 }
 
+const mapping: { [key: string]: Set<string> } = {
+    'a': new Set(['á','à','â','ã']),
+    'e': new Set(['é','ê']),
+    'i': new Set(['í']),
+    'o': new Set(['ó','ô','õ']),
+    'u': new Set(['ú']),
+    'c': new Set(['ç'])
+}
+
+export const similar = ( charA: string, charB: string ) => {
+    return (
+        // Literalmente mesmo caractere
+        charA === charB ||
+        // Variante com acento
+        mapping[charA]?.has(charB) ||
+        mapping[charB]?.has(charA)
+    )
+}
+
 export const letterCount = ( word: string ) => {
     const data: { [key: string]: number } = {};
     for ( const letter of word ) {
@@ -35,7 +54,7 @@ export const wordStatus = ( correct: string, text: string ) =>
     return status.map( ( st, pos ) => {
         // Verifica existentes nas posições corretas
         const letter = text[pos];
-        if ( letter === correct[pos] ) {
+        if ( similar( letter, correct[pos] ) ) {
             count[letter]--;
             return RIGHT_PLACE;
         } else
